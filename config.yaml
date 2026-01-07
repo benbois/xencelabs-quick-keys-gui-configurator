@@ -1,54 +1,77 @@
 device:
-  brightness: medium # off, low, medium, full
-  orientation: 180     # 0, 90, 180, 270
-  wheel_speed: faster # slowest, slower, normal, faster, fastest
-  sleep_timeout: 30 # minutes
-  wheel_color:
-    r: 0
-    g: 255
-    b: 255
+  brightness: medium
+  orientation: 180
+  sleep_timeout: 30
+
 
 # Button Layout:
-# [0] [1]
-# [2] [3]
-# [4] [5]
-# [6] [7]
-#
-# [8] is the physical button on the wheel
-# Wheel movements are defined separately
+# 0-7: The 8 OLED keys
+# 8: The physical button usually labeled with a diamond/layer icon
+# 9: The center click of the wheel
+
 
 layers:
-  - name: "Default"
+  - name: "General"
+    # Blue Ring for General
+    color: { r: 0, g: 0, b: 255 }
+    wheel_speed: faster
+    buttons:
+      6:
+        label: "Vol -"
+        keys: ["KEY_VOLUMEDOWN"]
+      7:
+        label: "Vol +"
+        keys: ["KEY_VOLUMEUP"]
+      8:
+        # The separate physical button
+        label: "Layer"
+        keys: ["INTERNAL_LAYER_CYCLE"]
+      9:
+        # The Wheel Center Click
+        label: "Mute"
+        keys: ["KEY_MUTE"]
+    wheel:
+      left: ["KEY_UP"]
+      right: ["KEY_DOWN"]
+
+  - name: "DaVinci"
+    # Red Ring for DaVinci
+    color: { r: 255, g: 0, b: 0 }
+    wheel_speed: fast
     buttons:
       0:
-        label: "Copy"
-        keys: ["KEY_LEFTCTRL", "KEY_C"]
+        label: "Split"
+        keys: ["KEY_LEFTCTRL", "KEY_BACKSLASH"]
       1:
-        label: "Paste"
-        keys: ["KEY_LEFTCTRL", "KEY_V"]
+        label: "Join"
+        keys: ["KEY_LEFTALT", "KEY_BACKSLASH"]
       2:
+        label: "Ripple Del"
+        keys: ["KEY_LEFTSHIFT", "KEY_BACKSPACE"]
+      3:
         label: "Undo"
         keys: ["KEY_LEFTCTRL", "KEY_Z"]
-      3:
-        label: "Save"
-        keys: ["KEY_LEFTCTRL", "KEY_S"]
       4:
-        label: "Brush"
+        label: "Blade"
         keys: ["KEY_B"]
       5:
-        label: "Erase"
-        keys: ["KEY_E"]
+        label: "Select"
+        keys: ["KEY_A"]
       6:
-        label: "Zoom In"
-        keys: ["KEY_LEFTSHIFT", "KEY_EQUAL"]
+        label: "Zoom -"
+        keys: ["KEY_LEFTCTRL", "KEY_MINUS"]
       7:
-        label: "Zoom Out"
-        keys: ["KEY_MINUS"]
+        label: "Zoom +"
+        keys: ["KEY_LEFTCTRL", "KEY_EQUAL"]
       8:
-        # Wheel Button
-        label: "Mode"
-        keys: ["KEY_TAB"]
-
+        # The separate physical button
+        label: "Layer"
+        keys: ["INTERNAL_LAYER_CYCLE"]
+      9:
+        # The Wheel Center Click
+        label: "Play"
+        keys: ["KEY_SPACE"]
     wheel:
-      left: ["KEY_LEFTBRACE"] # Decrease Brush Size
-      right: ["KEY_RIGHTBRACE"] # Increase Brush Size
+      # Frame stepping
+      left: ["KEY_LEFT"]
+      right: ["KEY_RIGHT"]
