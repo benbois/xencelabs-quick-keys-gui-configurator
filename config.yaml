@@ -1,0 +1,54 @@
+device:
+  brightness: medium # off, low, medium, full
+  orientation: 180     # 0, 90, 180, 270
+  wheel_speed: faster # slowest, slower, normal, faster, fastest
+  sleep_timeout: 30 # minutes
+  wheel_color:
+    r: 0
+    g: 255
+    b: 255
+
+# Button Layout:
+# [0] [1]
+# [2] [3]
+# [4] [5]
+# [6] [7]
+#
+# [8] is the physical button on the wheel
+# Wheel movements are defined separately
+
+layers:
+  - name: "Default"
+    buttons:
+      0:
+        label: "Copy"
+        keys: ["KEY_LEFTCTRL", "KEY_C"]
+      1:
+        label: "Paste"
+        keys: ["KEY_LEFTCTRL", "KEY_V"]
+      2:
+        label: "Undo"
+        keys: ["KEY_LEFTCTRL", "KEY_Z"]
+      3:
+        label: "Save"
+        keys: ["KEY_LEFTCTRL", "KEY_S"]
+      4:
+        label: "Brush"
+        keys: ["KEY_B"]
+      5:
+        label: "Erase"
+        keys: ["KEY_E"]
+      6:
+        label: "Zoom In"
+        keys: ["KEY_LEFTSHIFT", "KEY_EQUAL"]
+      7:
+        label: "Zoom Out"
+        keys: ["KEY_MINUS"]
+      8:
+        # Wheel Button
+        label: "Mode"
+        keys: ["KEY_TAB"]
+
+    wheel:
+      left: ["KEY_LEFTBRACE"] # Decrease Brush Size
+      right: ["KEY_RIGHTBRACE"] # Increase Brush Size
