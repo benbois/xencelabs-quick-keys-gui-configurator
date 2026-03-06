@@ -171,7 +171,7 @@ The overlay showing the current layer may require testing; improvements added (d
 
 ## Acknowledgments
 
-- Base code inspired by the work of [akhenakh](https://github.com/akhenakh/xencelabs-quick-keys-go).
+- Driver base code inspired by akhenakh's work. (https://github.com/akhenakh/xencelabs-quick-keys-go)
 - The graphical interface uses [Wails](https://wails.io/), a framework for building desktop applications with Go and web technologies.
 - All development was done with [Cursor AI](https://cursor.com/).
 
