@@ -2,6 +2,8 @@
 
 A lightweight, userland driver for the Xencelabs Quick Keys remote, written in Go. All configuration is done through an interactive GUI.
 
+![Systray-Overlay](screenshots/Systray-Overlay.jpg)  ![Systray-Menu](screenshots/Systray-Menu.jpg)
+
 ![Sets tab](screenshots/Set-Tab.jpg)
 
 [Screenshots](screenshots/)
