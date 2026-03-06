@@ -161,3 +161,8 @@ The overlay showing the current layer may require testing; improvements added (d
 
 - Base code inspired by the work of [akhenakh](https://github.com/akhenakh/xencelabs-quick-keys-go).
 - The graphical interface uses [Wails](https://wails.io/), a framework for building desktop applications with Go and web technologies.
+- All development was done with [Cursor AI](https://cursor.com/).
+
+## Tested Environment
+
+The driver has been tested and is fully functional on **Ubuntu 25.10** with **KDE Plasma 6**.
