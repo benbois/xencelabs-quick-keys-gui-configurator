@@ -4,6 +4,8 @@ A lightweight, userland driver for the Xencelabs Quick Keys remote, written in G
 
 ![Sets tab](screenshots/Set-Tab.jpg)
 
+[Screenshots](screenshots/)
+
 ## Features
 
 - **Full Remapping:** Map buttons and the wheel to any keyboard combination.
