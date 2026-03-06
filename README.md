@@ -1,11 +1,19 @@
 # Xencelabs Quick Keys Driver for Linux (Go)
 
-A lightweight, userland driver for the Xencelabs Quick Keys remote, written in Go. This driver uses `uinput` to simulate keyboard events at the kernel level, making it fully compatible with **Wayland**, **X11**, and **TTYs**.
+A lightweight, userland driver for the Xencelabs Quick Keys remote, written in Go. All configuration is done through an interactive GUI.
 
 ## Features
 
 - **Full Remapping:** Map buttons and the wheel to any keyboard combination.
 - **Layer Support:** Create multiple layers (e.g., General, DaVinci, Blender) and cycle through them.
+- **Visual Key Assignment:** Integrated reference table for key codes.
+- **Label Simulation:** Dynamic display of labels on the device screen.
+- **Integrated Config Editor:** Built-in YAML configuration file editor with syntax validation.
+- **Device Orientation Indicator:** Visual preview of the device orientation (0°, 90°, 180°, 270°).
+- **Configurable Startup Set:** Choose which layer to load on startup.
+- **Keyboard Layout:** QWERTY or AZERTY layout selection.
+- **Battery on Device:** Option to display battery level directly on the device screen.
+- **Systray Icon:** Status indicator in the system tray with quick access to the configuration window.
 - **OLED Control:** Custom text labels per button and temporary text overlays when switching layers.
 - **LED Control:** Custom colored LED ring per layer.
 - **Wheel Settings:** Configurable sensitivity/speed per layer.
