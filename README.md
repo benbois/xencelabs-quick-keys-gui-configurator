@@ -2,6 +2,8 @@
 
 A lightweight, userland driver for the Xencelabs Quick Keys remote, written in Go. All configuration is done through an interactive GUI.
 
+![Sets tab](screenshots/Set-Tab.jpg)
+
 ## Features
 
 - **Full Remapping:** Map buttons and the wheel to any keyboard combination.
