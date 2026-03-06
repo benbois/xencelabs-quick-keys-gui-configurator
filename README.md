@@ -30,15 +30,15 @@ sudo apt install libusb-1.0-0-dev libudev-dev pkg-config
 ### Build options
 
 - **Basic** (no systray): `go build .`
-- **With systray + Wails GUI** (recommended): `make build-tray` ou `wails build -tags "tray,webkit2_41,wails"`
-  - **Important** : le tag `wails` est requis (utilise slytomcat/systray, DBus uniquement, sans conflit GTK)
-  - Icône systray avec statut, layer, batterie ; menu « Configurer... » ouvre la fenêtre Wails
-  - Fenêtre Wails (HTML/JS) pour éditer la configuration
-  - Option `-show-gui` ou `--show-gui` : affiche la fenêtre de configuration au démarrage
-  - Dépendances Wails sur Linux : `sudo apt install libgtk-3-dev libwebkit2gtk-4.1-dev`
-  - Systray : si l'icône n'apparaît pas (GNOME ancien), installer `snixembed` ou un proxy StatusNotifierItems
-  - Ubuntu 24.04+ : utiliser le tag `webkit2_41` (WebKitGTK 4.1)
-  - Wails CLI : `go install github.com/wailsapp/wails/v2/cmd/wails@latest`
+- **With systray + Wails GUI** (recommended): `make build-tray` or `wails build -tags "tray,webkit2_41,wails"`
+  - **Important:** the `wails` tag is required (uses slytomcat/systray, DBus only, no GTK conflict)
+  - Systray icon with status, layer, battery; "Configure..." menu opens the Wails window
+  - Wails window (HTML/JS) to edit the configuration
+  - Option `-show-gui` or `--show-gui`: show the configuration window on startup
+  - Wails dependencies on Linux: `sudo apt install libgtk-3-dev libwebkit2gtk-4.1-dev`
+  - Systray: if the icon does not appear (older GNOME), install `snixembed` or a StatusNotifierItems proxy
+  - Ubuntu 24.04+: use the `webkit2_41` tag (WebKitGTK 4.1)
+  - Wails CLI: `go install github.com/wailsapp/wails/v2/cmd/wails@latest`
 
 ## Configuration (`config.yaml`)
 
@@ -80,18 +80,18 @@ layers:
       right: ["KEY_VOLUMEUP"]
 ```
 
-## Mode sans fil (Wireless)
+## Wireless Mode
 
-Si vous utilisez le Quick Keys **sans fil** (dongle USB) et que l'écran OLED affiche « Please connect the computer and install driver », la télécommande n'est **pas encore appairée** au dongle.
+If you use the Quick Keys **wirelessly** (USB dongle) and the OLED screen displays "Please connect the computer and install driver", the remote is **not yet paired** with the dongle.
 
-**Appairage requis (une seule fois) :**
-1. Connectez le Quick Keys au PC **avec le câble USB** (pas le dongle)
-2. Sur un PC **Windows ou Mac**, installez le pilote officiel Xencelabs
-3. Ouvrez l'application Xencelabs → Paramètres (icône engrenage) → « Manage Wireless Pairing »
-4. Branchez le dongle USB, puis appairez la télécommande au dongle
-5. Une fois appairé, le Quick Keys fonctionnera en sans fil avec ce driver Linux
+**Pairing required (one-time):**
+1. Connect the Quick Keys to the PC **with the USB cable** (not the dongle)
+2. On a **Windows or Mac** PC, install the official Xencelabs driver
+3. Open the Xencelabs application → Settings (gear icon) → "Manage Wireless Pairing"
+4. Plug in the USB dongle, then pair the remote with the dongle
+5. Once paired, the Quick Keys will work wirelessly with this Linux driver
 
-**Alternative :** Utilisez le Quick Keys en **mode filaire** en le connectant directement au PC avec le câble USB. Aucun appairage nécessaire.
+**Alternative:** Use the Quick Keys in **wired mode** by connecting it directly to the PC with the USB cable. No pairing required.
 
 ## Running the Driver
 
@@ -109,28 +109,28 @@ Since this driver creates a virtual keyboard, it requires access to `/dev/uinput
 ./xencelabs-quick-keys
 ```
 
-### 3. Installation système (démarrage automatique)
+### 3. System Installation (automatic startup)
 
 ```bash
-# Compiler et installer le binaire + service systemd
+# Build and install the binary + systemd service
 make install
 
-# Installer les règles udev (nécessite sudo)
+# Install udev rules (requires sudo)
 sudo make udev
 
-# IMPORTANT : permettre le démarrage des services utilisateur au boot (sans connexion)
+# IMPORTANT: allow user services to start at boot (without login)
 loginctl enable-linger $USER
 
-# Activer le service
+# Enable the service
 systemctl --user daemon-reload
 systemctl --user enable --now xencelabs-quick-keys
 ```
 
-Sans `loginctl enable-linger`, le service ne démarre qu'à la connexion graphique. Avec linger, il démarre au boot.
+Without `loginctl enable-linger`, the service only starts at graphical login. With linger, it starts at boot.
 
-Commandes utiles :
-- `systemctl --user status xencelabs-quick-keys` — état du service
-- `journalctl --user -u xencelabs-quick-keys -f` — afficher les logs en direct
+Useful commands:
+- `systemctl --user status xencelabs-quick-keys` — service status
+- `journalctl --user -u xencelabs-quick-keys -f` — view logs in real time
 
 ## Supported Key Codes
 
@@ -147,11 +147,11 @@ Use standard Linux input event codes in `config.yaml`. Common examples:
 
 ## Debug
 
-Pour diagnostiquer les entrées (ex: bouton central de la molette) :
+To diagnose inputs (e.g. wheel center button):
 ```bash
 XENCELABS_DEBUG=1 ./xencelabs-quick-keys
 ```
-Affiche k1, k2, wheel en hex à chaque pression.
+Displays k1, k2, wheel in hex on each press.
 
 ## Known Bugs
 
