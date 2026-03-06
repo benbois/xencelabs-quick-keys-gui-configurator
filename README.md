@@ -1,4 +1,4 @@
-# Xencelabs Quick Keys Driver for Linux (Go)
+# Xencelabs Quick Keys Driver & GUI Configurator for Linux
 
 A lightweight, userland driver for the Xencelabs Quick Keys remote, written in Go. All configuration is done through an interactive GUI.
 
