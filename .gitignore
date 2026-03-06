@@ -1,0 +1,13 @@
+# Binaries
+xencelabs-quick-keys
+xencelabs-quick-keys-notray
+xencelabs-quick-keys-go
+
+# Build output
+build/
+
+# Font archives (sources)
+*.zip
+
+# GIMP source
+*.xcf

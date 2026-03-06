@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="177.44724mm"
+   height="70.55555mm"
+   viewBox="0 0 177.44724 70.55555"
+   version="1.1"
+   id="svg1"
+   xml:space="preserve"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   sodipodi:docname="ring.svg"
+   inkscape:export-filename="ring.png"
+   inkscape:export-xdpi="146.57652"
+   inkscape:export-ydpi="146.57652"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
+     id="namedview1"
+     pagecolor="#a7a7a7"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="false"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showguides="true"
+     inkscape:zoom="1.4538742"
+     inkscape:cx="631.41639"
+     inkscape:cy="-3.4390871"
+     inkscape:current-layer="layer4"
+     showborder="false"
+     borderlayer="false" /><defs
+     id="defs1" /><g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="ring"><path
+       style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;fill:#ffffff;stroke-linecap:square;enable-background:accumulate;stop-color:#000000;stop-opacity:1;opacity:1"
+       d="m 149.58984,13.632813 c -11.93191,0 -21.625,9.693087 -21.625,21.624999 0,11.931913 9.69309,21.626954 21.625,21.626954 11.93192,0 21.62696,-9.695041 21.62696,-21.626954 0,-11.931912 -9.69504,-21.624999 -21.62696,-21.624999 z m 0,1.976562 c 10.86375,0 19.65039,8.784695 19.65039,19.648437 0,10.863743 -8.78664,19.650391 -19.65039,19.650391 -10.86374,0 -19.64843,-8.786648 -19.64843,-19.650391 0,-10.863742 8.78469,-19.648437 19.64843,-19.648437 z"
+       id="circle3-8-9" /></g></svg>

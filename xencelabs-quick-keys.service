@@ -1,0 +1,17 @@
+[Unit]
+Description=Xencelabs Quick Keys Driver
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sleep 3
+ExecStart=/usr/local/bin/xencelabs-quick-keys
+Restart=on-failure
+RestartSec=10
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=xencelabs-quick-keys
+
+[Install]
+# default.target = démarrage plus fiable (graphical-session peut être absent)
+WantedBy=default.target

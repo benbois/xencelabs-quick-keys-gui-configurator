@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Xencelabs Quick Keys
+Comment=Driver pour Xencelabs Quick Keys
+# Essayer avec shell de login pour hériter de l'environnement session
+Exec=bash -l -c 'sleep 10 && exec /usr/local/bin/xencelabs-quick-keys'
+Icon=xencelabs-quick-keys
+Terminal=false
+StartupNotify=false
+X-GNOME-Autostart-enabled=true
+# Démarrer après le panneau (systray prêt)
+X-GNOME-Autostart-Phase=Applications

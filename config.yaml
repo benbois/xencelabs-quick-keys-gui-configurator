@@ -1,18 +1,21 @@
+# Xencelabs Quick Keys - Configuration
+# Copy to ~/.config/Xencelab/config.yaml for first-time setup
+
 device:
-  brightness: medium
-  orientation: 180
-  sleep_timeout: 30
+  brightness: medium      # off, low, medium, full
+  orientation: 180         # 0, 90, 180, 270
+  wheel_speed: normal     # slowest, slower, normal, faster, fastest
+  overlay_duration: 2     # seconds to display layer name
+  keyboard_layout: azerty # qwerty or azerty (fr-FR)
+  sleep_timeout: 30       # minutes before sleep (0 = disabled)
+  initial_layer: 0        # index (0, 1, 2...) or layer name at startup
+  double_click_ms: 500    # double-click window for button 8
+  button_8_double: ["INTERNAL_BATTERY_OVERLAY"]  # button 8 double-click = show battery (global only)
+  show_battery_in_layer_name: true  # show ▍▍▍ NN% after layer name on device OLED
 
-
-# Button Layout:
-# 0-7: The 8 OLED keys
-# 8: The physical button usually labeled with a diamond/layer icon
-# 9: The center click of the wheel
-
-
+# Buttons: keys = single click. Double-click only on button 8 (Set) = device.button_8_double
 layers:
   - name: "General"
-    # Blue Ring for General
     color: { r: 0, g: 0, b: 255 }
     wheel_speed: faster
     buttons:
@@ -23,11 +26,9 @@ layers:
         label: "Vol +"
         keys: ["KEY_VOLUMEUP"]
       8:
-        # The separate physical button
         label: "Layer"
         keys: ["INTERNAL_LAYER_CYCLE"]
       9:
-        # The Wheel Center Click
         label: "Mute"
         keys: ["KEY_MUTE"]
     wheel:
@@ -35,7 +36,6 @@ layers:
       right: ["KEY_DOWN"]
 
   - name: "DaVinci"
-    # Red Ring for DaVinci
     color: { r: 255, g: 0, b: 0 }
     wheel_speed: fast
     buttons:
@@ -64,14 +64,11 @@ layers:
         label: "Zoom +"
         keys: ["KEY_LEFTCTRL", "KEY_EQUAL"]
       8:
-        # The separate physical button
         label: "Layer"
         keys: ["INTERNAL_LAYER_CYCLE"]
       9:
-        # The Wheel Center Click
         label: "Play"
         keys: ["KEY_SPACE"]
     wheel:
-      # Frame stepping
       left: ["KEY_LEFT"]
       right: ["KEY_RIGHT"]

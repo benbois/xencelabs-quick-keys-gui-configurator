@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xencelabs Quick Keys - Configuration</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div id="app">
+    <main class="main">
+      <section class="block main-tabs-block">
+        <div class="main-tab-headers">
+          <button type="button" class="main-tab-btn active" data-main-tab="general">General</button>
+          <button type="button" class="main-tab-btn" data-main-tab="sets">Sets</button>
+        </div>
+        <div id="mainTabGeneral" class="main-tab-panel active">
+          <div class="general-content">
+            <div class="form-grid">
+          <div class="form-row form-row-brightness-battery">
+            <label for="brightness">Screen Brightness</label>
+            <div class="value-slider">
+              <div class="range-container">
+                <div class="range">
+                  <div class="track"></div>
+                  <input type="range" id="brightness" class="slider" min="0" max="3" step="1" value="2">
+                  <div class="ticks"><span></span><span></span><span></span><span></span></div>
+                </div>
+              </div>
+              <span id="brightnessLabel">medium</span>
+            </div>
+            <div class="device-battery-wrap">
+              <div class="device-state-display" id="deviceStateDisplay">
+                <span>Device</span>
+                <span class="device-state-icon" id="deviceStateIcon" aria-hidden="true"></span>
+                <span id="deviceStateText">—</span>
+              </div>
+              <div class="battery-display" id="batteryDisplay" title="Battery">
+                <span class="battery-label">Battery</span>
+                <span class="battery-icon" id="batteryIcon" aria-hidden="true"></span>
+                <span class="battery-pct" id="batteryPct">—</span>
+                <span class="battery-state" id="batteryState"></span>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="orientation">Orientation</label>
+            <div class="value-slider">
+              <div class="range-container">
+                <div class="range">
+                  <div class="track"></div>
+                  <input type="range" id="orientation" class="slider" min="0" max="3" step="1" value="0">
+                  <div class="ticks"><span></span><span></span><span></span><span></span></div>
+                </div>
+              </div>
+              <span id="orientationLabel">0°</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="wheelSpeed">Wheel speed</label>
+            <div class="value-slider">
+              <div class="range-container">
+                <div class="range">
+                  <div class="track"></div>
+                  <input type="range" id="wheelSpeed" class="slider" min="0" max="4" step="1" value="2">
+                  <div class="ticks"><span></span><span></span><span></span><span></span><span></span></div>
+                </div>
+              </div>
+              <span id="wheelSpeedLabel">normal</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="overlayDur">Overlay duration</label>
+            <div class="value-slider">
+              <div class="range-container">
+                <div class="range">
+                  <div class="track"></div>
+                  <input type="range" id="overlayDur" class="slider" min="1" max="5" step="1" value="2">
+                  <div class="ticks"><span></span><span></span><span></span><span></span><span></span></div>
+                </div>
+              </div>
+              <span id="overlayDurLabel">2 s</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="sleepTimeout">Sleep timeout</label>
+            <div class="value-slider">
+              <div class="range-container">
+                <div class="range">
+                  <div class="track"></div>
+                  <input type="range" id="sleepTimeout" class="slider" min="2" max="30" step="2" value="30">
+                </div>
+              </div>
+              <span id="sleepTimeoutLabel">30 min</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <label>Initial set</label>
+            <select id="initialLayer"></select>
+          </div>
+          <div class="form-row form-row-checkbox">
+            <label for="batteryOnDoubleClick">Double-click the Set button to view the battery level</label>
+            <input type="checkbox" id="batteryOnDoubleClick">
+          </div>
+          <div class="form-row" id="doubleClickDurationRow">
+            <label for="doubleClickMs">Double-click duration</label>
+            <div class="value-slider">
+              <div class="range-container">
+                <div class="range">
+                  <div class="track"></div>
+                  <input type="range" id="doubleClickMs" class="slider" min="300" max="500" step="100" value="500">
+                  <div class="ticks"><span></span><span></span><span></span></div>
+                </div>
+              </div>
+              <span id="doubleClickMsLabel">500 ms</span>
+            </div>
+          </div>
+          <div class="form-row form-row-checkbox">
+            <label for="showBattery">Display the battery level with the set name</label>
+            <input type="checkbox" id="showBattery">
+          </div>
+          <div class="form-row">
+            <label>Keyboard layout</label>
+            <select id="keyboardLayout">
+              <option value="qwerty">qwerty</option>
+              <option value="azerty">azerty</option>
+            </select>
+          </div>
+        </div>
+            <div class="general-image-wrap">
+              <img id="orientationImg" src="xencelabs-quick-keys.png" alt="Quick Keys" class="orientation-img">
+            </div>
+          </div>
+        </div>
+        <div id="mainTabSets" class="main-tab-panel">
+          <div class="tabs">
+            <div class="tab-headers" id="tabHeaders"></div>
+            <div class="tab-content" id="tabContent"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <button id="openEditor">Edit the Configuration file</button>
+      <div class="footer-right">
+        <button id="saveBtn"><u>S</u>ave</button>
+        <button id="quitBtn">E<u>x</u>it</button>
+      </div>
+    </footer>
+  </div>
+
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <p id="modal-message"></p>
+      <div class="modal-buttons">
+        <button id="modal-cancel">Cancel</button>
+        <button id="modal-save-exit" style="display: none;">Exit with saving</button>
+        <button id="modal-confirm">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="config-editor-overlay" class="config-editor-overlay hidden">
+    <div id="config-editor-error-popup" class="config-editor-error-popup hidden">
+      <p class="config-editor-error-title">Invalid structure detected!</p>
+      <p class="config-editor-error-line" id="config-editor-error-line"></p>
+      <button type="button" id="config-editor-error-close">Close</button>
+    </div>
+    <div class="config-editor-modal">
+      <div class="config-editor-scroll">
+        <div class="config-editor-content-area" id="config-editor-content-area">
+          <div class="config-editor-lines" id="config-editor-lines"></div>
+          <div class="config-editor-stripes" id="config-editor-stripes"></div>
+          <textarea id="config-editor-text" spellcheck="false"></textarea>
+        </div>
+      </div>
+      <div class="config-editor-buttons">
+        <button id="config-editor-cancel">Cancel</button>
+        <button id="config-editor-save"><u>S</u>ave</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="keys-panel" class="keys-panel hidden">
+    <div class="keys-panel-inner">
+      <h3>Available keys <span class="keys-panel-hint">(click to insert)</span></h3>
+      <div class="keys-table-wrap">
+        <table class="keys-table" id="keysTable"></table>
+      </div>
+      <div class="keys-custom-row">
+        <label for="keysCustomInput">Key Code</label>
+        <div class="keys-code-input-wrap">
+          <input type="text" id="keysCustomInput" placeholder="e.g. KEY_LEFTSHIFT, KEY_A">
+          <button type="button" class="keys-clear-btn" id="keysClearBtn" title="Clear" aria-label="Clear">×</button>
+        </div>
+        <button type="button" id="keysUseCustomBtn">Use this Key</button>
+        <button type="button" id="keysModalClose">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="wailsjs/runtime/runtime.js"></script>
+  <script src="app.js" type="module"></script>
+</body>
+</html>

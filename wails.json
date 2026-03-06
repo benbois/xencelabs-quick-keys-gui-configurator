@@ -1,0 +1,21 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "xencelabs-quick-keys",
+  "build:tags": "tray,wails",
+  "outputfilename": "xencelabs-quick-keys",
+  "frontend:install": "",
+  "frontend:build": "",
+  "frontend:dev:watcher": "",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Xencelabs Quick Keys",
+    "email": ""
+  },
+  "info": {
+    "companyName": "Xencelabs",
+    "productName": "Xencelabs Quick Keys - Configuration",
+    "productVersion": "1.0.0",
+    "copyright": "",
+    "comments": ""
+  }
+}
