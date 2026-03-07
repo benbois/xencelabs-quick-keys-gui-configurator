@@ -6,6 +6,10 @@ export function BackupConfig() {
   return window['go']['main']['App']['BackupConfig']();
 }
 
+export function ExportConfigToFile() {
+  return window['go']['main']['App']['ExportConfigToFile']();
+}
+
 export function GetAvailableKeys() {
   return window['go']['main']['App']['GetAvailableKeys']();
 }
@@ -24,6 +28,10 @@ export function GetDeviceState() {
 
 export function GetGUIState() {
   return window['go']['main']['App']['GetGUIState']();
+}
+
+export function ImportConfigFromFile() {
+  return window['go']['main']['App']['ImportConfigFromFile']();
 }
 
 export function LoadConfig() {

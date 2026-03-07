@@ -101,6 +101,7 @@ body {
 
 .main-tab-btn:not(.active) {
   color: #aaa;
+  font-weight: normal;
 }
 
 .main-tab-btn:not(.active):first-child {
@@ -122,6 +123,7 @@ body {
   background: #fff;
   border: none;
   color: #0078d4;
+  font-weight: bold;
 }
 
 .main-tab-panel {
@@ -186,6 +188,42 @@ body {
 .form-row.disabled {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.general-import-export-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: auto;
+  margin-bottom: 30px;
+}
+
+.general-import-export-row button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+  border: 1px solid transparent;
+  color: #fff;
+}
+
+#importConfig {
+  background: #e89b00;
+  border-color: #e89b00;
+}
+
+#importConfig:hover {
+  background: #f0a810;
+}
+
+#exportConfig {
+  background: #1565c0;
+  border-color: #1565c0;
+}
+
+#exportConfig:hover {
+  background: #1976d2;
 }
 
 .form-row-checkbox {
@@ -425,6 +463,7 @@ body {
 }
 
 .tab-btn {
+  position: relative;
   padding: 8px 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -476,6 +515,22 @@ body {
 .tab-btn-add:hover {
   background: #e3f2fd;
   color: #005a9e;
+}
+
+.tab-btn-edit-input {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(100% - 8px);
+  box-sizing: border-box;
+  padding: 2px 6px;
+  border: 1px solid #0078d4;
+  border-radius: 2px;
+  font-size: inherit;
+  font-family: inherit;
+  background: #fff;
 }
 
 .tab-panel {
@@ -922,6 +977,11 @@ body {
   z-index: 10;
 }
 
+.footer-left {
+  display: flex;
+  gap: 12px;
+}
+
 .footer-right {
   display: flex;
   gap: 12px;
@@ -941,6 +1001,16 @@ body {
   background: #e8e8e8;
 }
 
+.footer #openEditor {
+  background: #333;
+  border-color: #333;
+  color: #fff;
+}
+
+.footer #openEditor:hover {
+  background: #1a1a1a;
+}
+
 .footer #saveBtn {
   background: #2e7d32;
   border-color: #388e3c;
@@ -949,6 +1019,18 @@ body {
 
 .footer #saveBtn:hover {
   background: #388e3c;
+}
+
+.footer #saveBtn:disabled,
+.footer #saveBtn.save-disabled {
+  background: #bdbdbd;
+  border-color: #bdbdbd;
+  color: #757575;
+  cursor: not-allowed;
+}
+
+.footer #saveBtn.save-disabled:hover {
+  background: #bdbdbd;
 }
 
 .modal-overlay {

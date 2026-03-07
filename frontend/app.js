@@ -1,5 +1,5 @@
 // Wails bindings - imported from generated module
-import { LoadConfig as LoadConfigAPI, SaveConfig as SaveConfigAPI, BackupConfig as BackupConfigAPI, GetConfigPath, GetAvailableKeys, GetBattery, GetDeviceState, ReadConfigFile, WriteConfigFile, ValidateConfigYAML, Quit, SaveGUIState } from './wailsjs/go/main/App.js';
+import { LoadConfig as LoadConfigAPI, SaveConfig as SaveConfigAPI, BackupConfig as BackupConfigAPI, GetConfigPath, GetAvailableKeys, GetBattery, GetDeviceState, ReadConfigFile, WriteConfigFile, ValidateConfigYAML, ExportConfigToFile, ImportConfigFromFile, Quit, SaveGUIState } from './wailsjs/go/main/App.js';
 import { EventsOn } from './wailsjs/runtime/runtime.js';
 import { WindowHide, WindowGetSize } from './wailsjs/runtime/runtime.js';
 
@@ -28,10 +28,19 @@ async function loadConfig() {
       renderGeneral();
       renderLayers();
     }
+    updateSaveButtonState();
   } catch (err) {
     console.error('Load config failed:', err);
     alert('Failed to load config: ' + err);
   }
+}
+
+function updateSaveButtonState() {
+  const saveBtn = document.getElementById('saveBtn');
+  if (!saveBtn) return;
+  const hasChanges = hasUnsavedChanges();
+  saveBtn.disabled = !hasChanges;
+  saveBtn.classList.toggle('save-disabled', !hasChanges);
 }
 
 // Normalize config: Go JSON uses lowercase keys (device, brightness, etc.)
@@ -129,11 +138,19 @@ function renderLayers() {
   layersList.forEach((layer, idx) => {
     const btn = document.createElement('button');
     btn.className = 'tab-btn' + (idx === 0 ? ' active' : '');
-    btn.textContent = layer.name ?? layer.Name ?? `Set ${idx + 1}`;
     btn.dataset.index = idx;
     btn.dataset.color = rgbString(layer.color ?? layer.Color);
     btn.spellcheck = false;
     btn.onclick = () => switchTab(idx);
+    const textSpan = document.createElement('span');
+    textSpan.className = 'tab-btn-text';
+    textSpan.textContent = layer.name ?? layer.Name ?? `Set ${idx + 1}`;
+    btn.appendChild(textSpan);
+    btn.ondblclick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      startTabNameEdit(btn, idx, textSpan);
+    };
     headers.appendChild(btn);
 
     const panel = document.createElement('div');
@@ -171,7 +188,77 @@ function addNewLayer() {
   if (!config.layers) config.layers = layersList;
   renderGeneral();
   renderLayers();
-  switchTab(layersList.length - 1);
+  const newIdx = layersList.length - 1;
+  switchTab(newIdx);
+  setTimeout(() => {
+    const nameInput = document.getElementById(`layerName_${newIdx}`);
+    if (nameInput) {
+      nameInput.focus();
+      nameInput.select();
+    }
+  }, 0);
+}
+
+function startTabNameEdit(btn, idx, textSpan) {
+  const layersList = config?.layers ?? config?.Layers ?? [];
+  const layer = layersList[idx];
+  if (!layer) return;
+  const currentName = (layer.name ?? layer.Name ?? `Set ${idx + 1}`).trim();
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.value = currentName;
+  input.className = 'tab-btn-edit-input';
+  input.spellcheck = false;
+  textSpan.style.visibility = 'hidden';
+  btn.appendChild(input);
+  input.focus();
+  input.select();
+  const syncNameField = () => {
+    const nameInput = document.getElementById(`layerName_${idx}`);
+    if (nameInput) {
+      const val = input.value.trim() || `Set ${idx + 1}`;
+      const showBattery = document.getElementById('showBattery')?.checked ?? false;
+      const pct = lastBatteryPercent >= 0 ? lastBatteryPercent : 50;
+      nameInput.value = showBattery ? addBatterySuffix(val, pct) : val;
+    }
+  };
+  input.addEventListener('input', syncNameField);
+  syncNameField();
+  const save = () => {
+    const val = input.value.trim();
+    const name = val || `Set ${idx + 1}`;
+    layer.name = name;
+    if (layer.Name !== undefined) layer.Name = name;
+    textSpan.textContent = name;
+    const nameInput = document.getElementById(`layerName_${idx}`);
+    if (nameInput) {
+      const showBattery = document.getElementById('showBattery')?.checked ?? false;
+      const pct = lastBatteryPercent >= 0 ? lastBatteryPercent : 50;
+      nameInput.value = showBattery ? addBatterySuffix(name, pct) : name;
+    }
+    textSpan.style.visibility = '';
+    input.remove();
+    updateSaveButtonState();
+  };
+  input.onblur = () => {
+    input.removeEventListener('input', syncNameField);
+    save();
+  };
+  input.onkeydown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      input.removeEventListener('input', syncNameField);
+      input.onblur = null;
+      save();
+    }
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      input.value = currentName;
+      input.removeEventListener('input', syncNameField);
+      input.onblur = null;
+      save();
+    }
+  };
 }
 
 function buildLayerPanel(layer, idx, layersCount) {
@@ -399,6 +486,7 @@ async function save(silent = false) {
     baselineJSON = JSON.stringify(config);
     renderGeneral();
     renderLayers();
+    updateSaveButtonState();
     if (!silent) showModal('Configuration saved!', false, () => {}, 3000);
   } catch (err) {
     alert('Save failed: ' + err);
@@ -442,6 +530,23 @@ function showDeleteConfirmModal(message, onYes) {
   const saveExitBtn = document.getElementById('modal-save-exit');
   const confirmBtn = document.getElementById('modal-confirm');
   msg.textContent = message;
+  overlay.classList.remove('hidden');
+  cancelBtn.style.display = 'inline-block';
+  saveExitBtn.style.display = 'none';
+  cancelBtn.textContent = 'Cancel';
+  confirmBtn.textContent = 'Yes';
+  const done = () => overlay.classList.add('hidden');
+  cancelBtn.onclick = () => { done(); };
+  confirmBtn.onclick = () => { onYes(); done(); };
+}
+
+function showImportConfirmModal(onYes) {
+  const overlay = document.getElementById('modal-overlay');
+  const msg = document.getElementById('modal-message');
+  const cancelBtn = document.getElementById('modal-cancel');
+  const saveExitBtn = document.getElementById('modal-save-exit');
+  const confirmBtn = document.getElementById('modal-confirm');
+  msg.textContent = 'Importing this file will overwrite all current settings.\n\nContinue?';
   overlay.classList.remove('hidden');
   cancelBtn.style.display = 'inline-block';
   saveExitBtn.style.display = 'none';
@@ -591,6 +696,31 @@ document.addEventListener('keydown', (e) => {
       alert('Failed to load config: ' + err);
     }
   };
+  document.getElementById('exportConfig').onclick = async () => {
+    try {
+      const path = await ExportConfigToFile();
+      if (path) showModal('Configuration exported to:\n' + path, false, () => {}, 3000);
+    } catch (err) {
+      if (err && String(err).trim() !== '') alert('Export failed: ' + err);
+    }
+  };
+  document.getElementById('importConfig').onclick = async () => {
+    try {
+      const content = await ImportConfigFromFile();
+      if (!content) return; // user cancelled
+      showImportConfirmModal(async () => {
+        try {
+          await WriteConfigFile(content);
+          await loadConfig();
+          showModal('Configuration imported successfully!', false, () => {}, 3000);
+        } catch (err) {
+          alert('Import failed: ' + err);
+        }
+      });
+    } catch (err) {
+      if (err && String(err).trim() !== '') alert('Import failed: ' + err);
+    }
+  };
   document.getElementById('config-editor-text').addEventListener('input', () => {
     if (!document.getElementById('config-editor-overlay').classList.contains('hidden')) {
       updateConfigEditorLines(document.getElementById('config-editor-text').value);
@@ -701,7 +831,9 @@ document.addEventListener('keydown', (e) => {
     if (id?.match(/^btnKeys_\d+_\d+$/)) {
       e.target.title = (e.target.value || '').trim() || '—';
     }
+    updateSaveButtonState();
   });
+  document.addEventListener('change', () => updateSaveButtonState());
 
   // Color picker sync (ring SVG + tab border)
   document.addEventListener('input', (e) => {

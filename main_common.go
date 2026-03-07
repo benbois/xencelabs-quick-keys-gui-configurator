@@ -38,8 +38,9 @@ func resetOpenFailLog() {
 
 // Configuration Structures (shared between tray and non-tray builds)
 type Config struct {
-	Device DeviceSettings `yaml:"device"`
-	Layers []Layer        `yaml:"layers"`
+	XencelabsConfig int             `yaml:"xencelabs_config,omitempty"` // 1 = Xencelabs Quick Keys config (for import validation)
+	Device         DeviceSettings  `yaml:"device"`
+	Layers         []Layer         `yaml:"layers"`
 }
 
 type DeviceSettings struct {
@@ -134,7 +135,9 @@ func watchConfigFile(configPath string, reloadCh chan<- struct{}, done <-chan st
 	}
 }
 
-const defaultConfigYAML = `device:
+const defaultConfigYAML = `xencelabs_config: 1
+
+device:
   brightness: medium
   orientation: 0
   wheel_speed: normal
@@ -222,6 +225,7 @@ func saveConfig(configPath string, cfg *Config) error {
 	if err != nil {
 		return err
 	}
+	cfg.XencelabsConfig = 1
 	data, err := yaml.Marshal(cfg)
 	if err != nil {
 		return err

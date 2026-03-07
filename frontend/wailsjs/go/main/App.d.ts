@@ -4,6 +4,8 @@ import {main} from '../models';
 
 export function BackupConfig():Promise<void>;
 
+export function ExportConfigToFile():Promise<string>;
+
 export function GetAvailableKeys():Promise<Array<string>>;
 
 export function GetBattery():Promise<main.BatteryStatus>;
@@ -13,6 +15,8 @@ export function GetConfigPath():Promise<string>;
 export function GetDeviceState():Promise<string>;
 
 export function GetGUIState():Promise<number>;
+
+export function ImportConfigFromFile():Promise<string>;
 
 export function LoadConfig():Promise<main.ConfigDTO>;
 

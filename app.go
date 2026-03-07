@@ -188,6 +188,107 @@ func (a *App) ReadConfigFile() (string, error) {
 	return string(data), nil
 }
 
+// ExportConfigToFile opens a save dialog and writes the current config to the selected path.
+func (a *App) ExportConfigToFile() (string, error) {
+	content, err := a.ReadConfigFile()
+	if err != nil {
+		return "", err
+	}
+	configPath, err := getConfigPath()
+	if err != nil {
+		return "", err
+	}
+	defaultDir := filepath.Dir(configPath)
+	defaultName := filepath.Base(configPath)
+	path, err := runtime.SaveFileDialog(a.ctx, runtime.SaveDialogOptions{
+		Title:            "Export Configuration file",
+		DefaultFilename:  defaultName,
+		DefaultDirectory: defaultDir,
+		Filters: []runtime.FileFilter{
+			{DisplayName: "YAML files (*.yaml)", Pattern: "*.yaml;*.yml"},
+			{DisplayName: "All files", Pattern: "*"},
+		},
+	})
+	if err != nil || path == "" {
+		return "", err
+	}
+	if err := os.WriteFile(path, []byte(content), 0644); err != nil {
+		return "", err
+	}
+	return path, nil
+}
+
+// ImportConfigFromFile opens a file dialog, reads and validates the selected YAML file.
+// Returns the file content if valid, or an error. The frontend must show a confirm dialog
+// and call WriteConfigFile if the user confirms.
+func (a *App) ImportConfigFromFile() (string, error) {
+	configPath, err := getConfigPath()
+	if err != nil {
+		return "", err
+	}
+	defaultDir := filepath.Dir(configPath)
+	path, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
+		Title:            "Import Configuration file",
+		DefaultDirectory: defaultDir,
+		Filters: []runtime.FileFilter{
+			{DisplayName: "YAML files (*.yaml, *.yml)", Pattern: "*.yaml;*.yml"},
+			{DisplayName: "All files", Pattern: "*"},
+		},
+	})
+	if err != nil || path == "" {
+		return "", err
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	content := string(data)
+	result := a.ValidateConfigYAML(content)
+	if result.Error != "" {
+		msg := result.Error
+		if result.Line > 0 {
+			msg = "line " + strconv.Itoa(result.Line) + ": " + msg
+		}
+		return "", errImportInvalid(msg)
+	}
+	// Check Xencelabs config ID (optional for backward compat)
+	if !isXencelabsConfig(content) {
+		return "", errImportInvalid("not a Xencelabs Quick Keys configuration file")
+	}
+	return content, nil
+}
+
+type errImportInvalid string
+
+func (e errImportInvalid) Error() string { return string(e) }
+
+func isXencelabsConfig(content string) bool {
+	var raw map[string]interface{}
+	if err := yaml.Unmarshal([]byte(content), &raw); err != nil {
+		return false
+	}
+	// Must have device and layers
+	if _, ok := raw["device"]; !ok {
+		return false
+	}
+	if layers, ok := raw["layers"]; !ok {
+		return false
+	} else if arr, ok := layers.([]interface{}); !ok || len(arr) == 0 {
+		return false
+	}
+	// Optional: xencelabs_config field (if present, must be 1)
+	if v, ok := raw["xencelabs_config"]; ok {
+		if n, ok := v.(int); ok && n == 1 {
+			return true
+		}
+		if n, ok := v.(float64); ok && n == 1 {
+			return true
+		}
+		return false
+	}
+	return true
+}
+
 // WriteConfigFile writes raw content to the config file and signals the daemon to reload.
 func (a *App) WriteConfigFile(content string) error {
 	configPath, err := getConfigPath()

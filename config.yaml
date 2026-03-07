@@ -1,5 +1,6 @@
 # Xencelabs Quick Keys - Configuration
 # Copy to ~/.config/Xencelab/config.yaml for first-time setup
+xencelabs_config: 1
 
 device:
   brightness: medium      # off, low, medium, full
